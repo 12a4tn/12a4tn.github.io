@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12A4 - 2023-2026</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Font chữ cao cấp -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0c0f;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background: rgba(10, 12, 15, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #e4c580;
+            box-shadow: 0 0 15px rgba(228, 197, 128, 0.3);
+            transition: transform 0.3s;
+            background: linear-gradient(135deg, #e4c580, #f5e6b3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-img:hover { transform: scale(1.1); }
+        .logo-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .logo-img .fallback {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e4c580, #f5e6b3);
+            color: #0a0c0f;
+            font-weight: bold;
+            font-size: 1.2rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #e4c580, #f5e6b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        .logo-text::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, #e4c580, transparent);
+        }
+        .nav-links { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+        .nav-links a {
+            text-decoration: none;
+            color: #9a9a9a;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover { color: #e4c580; }
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #e4c580;
+            transition: 0.3s;
+        }
+        .nav-links a:hover::before { width: 100%; }
+        .sound-control-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sound-tooltip {
+            background: rgba(228, 197, 128, 0.2);
+            backdrop-filter: blur(10px);
+            color: #e4c580;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            border: 1px solid #e4c580;
+            white-space: nowrap;
+            animation: pulse 2s infinite;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .sound-tooltip i { margin-right: 5px; font-size: 0.7rem; }
+        @keyframes pulse {
+            0% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.8; transform: scale(1); }
+        }
+        .sound-control {
+            background: rgba(228, 197, 128, 0.2);
+            backdrop-filter: blur(10px);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid #e4c580;
+            transition: 0.3s;
+        }
+        .sound-control:hover {
+            background: #e4c580;
+            transform: scale(1.1);
+        }
+        .sound-control i { font-size: 1.8rem; color: #e4c580; }
+        .sound-control:hover i { color: #0a0c0f; }
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: -1;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 50%, rgba(228, 197, 128, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 3rem;
+            animation: fadeInUp 1.5s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #e4c580;
+            margin-bottom: 1rem;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .hero h1 span { color: #e4c580; font-style: italic; }
+        .hero p {
+            font-size: 1.2rem;
+            color: #d0d0d0;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .hero-stat-item { text-align: center; }
+        .hero-stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e4c580;
+            margin-bottom: 0.5rem;
+        }
+        .hero-stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+        }
+        .btn {
+            background: transparent;
+            border: 2px solid #e4c580;
+            color: #e4c580;
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 50px;
+        }
+        .btn:hover {
+            background: #e4c580;
+            color: #0a0c0f;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(228, 197, 128, 0.3);
+        }
+        .section { padding: 6rem 5%; position: relative; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-subtitle {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #e4c580;
+            margin-bottom: 0.5rem;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: #e4c580;
+        }
+        .section-desc {
+            color: #9a9a9a;
+            max-width: 600px;
+            margin: 2rem auto 0;
+        }
+        .memory-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+        .memory-btn {
+            background: transparent;
+            border: 2px solid #e4c580;
+            color: #e4c580;
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            border-radius: 50px;
+            min-width: 200px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(228, 197, 128, 0.3);
+            animation: gentlePulse 2s infinite;
+        }
+        @keyframes gentlePulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(228, 197, 128, 0.3); border-color: #e4c580; }
+            50% { box-shadow: 0 0 25px rgba(228, 197, 128, 0.8); border-color: #f5e6b3; }
+        }
+        .memory-btn i { font-size: 1.5rem; transition: 0.3s; }
+        .memory-btn:hover {
+            background: #e4c580;
+            color: #0a0c0f;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(228, 197, 128, 0.5);
+            animation: none;
+        }
+        .memory-btn:hover i { transform: scale(1.2) rotate(5deg); }
+        /* Cả 3 nút đều có nhấp nháy như nhau */
+        .memory-btn.lop10 { border-color: #ffb5b5; color: #ffb5b5; animation: gentlePulse 2s infinite; box-shadow: 0 0 10px rgba(255, 181, 181, 0.3); }
+        .memory-btn.lop10:hover { background: #ffb5b5; color: #0a0c0f; animation: none; }
+        .memory-btn.lop11 { border-color: #a8e6cf; color: #a8e6cf; animation: gentlePulse 2s infinite; box-shadow: 0 0 10px rgba(168, 230, 207, 0.3); }
+        .memory-btn.lop11:hover { background: #a8e6cf; color: #0a0c0f; animation: none; }
+        .memory-btn.lop12 { border-color: #e4c580; color: #e4c580; animation: gentlePulse 2s infinite; box-shadow: 0 0 20px rgba(228, 197, 128, 0.5); }
+        .memory-btn.lop12:hover { background: #e4c580; color: #0a0c0f; animation: none; }
+        .memory-tooltip {
+            text-align: center;
+            margin-top: -20px;
+            margin-bottom: 20px;
+            color: #e4c580;
+            font-size: 0.9rem;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 5rem;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        .stat-box { text-align: center; }
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #e4c580;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            color: #9a9a9a;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        .members-section {
+            padding: 4rem 5%;
+            background: #0f1115;
+        }
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #e4c580;
+            margin: 3rem 0 2rem;
+            text-align: center;
+            position: relative;
+        }
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #e4c580;
+        }
+        .special-title {
+            background: linear-gradient(135deg, #e4c580, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .leaders-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .special-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, rgba(228, 197, 128, 0.05), rgba(255, 215, 0, 0.02));
+            padding: 2rem;
+            border-radius: 30px;
+            border: 1px solid rgba(228, 197, 128, 0.3);
+        }
+        .member-card {
+            width: 100%;
+            height: 320px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .member-card:hover {
+            border-color: #e4c580;
+            transform: translateY(-5px);
+        }
+        .member-card.special {
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #e4c580, #ffd700) 1;
+            background: linear-gradient(135deg, rgba(228, 197, 128, 0.1), rgba(255, 215, 0, 0.05));
+            position: relative;
+            overflow: hidden;
+        }
+        .member-card.special::before {
+            content: '✈️';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            opacity: 0.6;
+            animation: fly 3s ease-in-out infinite;
+        }
+        @keyframes fly {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(5px) translateY(-5px); }
+        }
+        .member-card.teacher:hover { border-color: #ffb5b5; }
+        .member-card.leader:hover { border-color: #a8e6cf; }
+        .member-card .card-inner {
+            padding: 2rem 1rem 1.5rem;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+            border: 3px solid #e4c580;
+            padding: 3px;
+            background: #0f1115;
+        }
+        .teacher .member-avatar { border-color: #ffb5b5; }
+        .leader .member-avatar { border-color: #a8e6cf; }
+        .leaders-grid .member-card:nth-child(2) .member-avatar {
+            width: 140px;
+            height: 140px;
+            border-width: 4px;
+        }
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+        .member-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #ffffff;
+        }
+        .member-role {
+            color: #e4c580;
+            font-weight: 500;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 1px;
+        }
+        .teacher .member-role { color: #ffb5b5; }
+        .leader .member-role { color: #a8e6cf; }
+        .special-status {
+            font-size: 0.7rem;
+            color: #ffd700;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .member-social {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .member-social a {
+            color: #666;
+            transition: 0.3s;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        .member-social a:hover {
+            color: #e4c580;
+            background: rgba(228, 197, 128, 0.1);
+            transform: scale(1.1);
+        }
+        .teacher .member-social a:hover { color: #ffb5b5; }
+        .leader .member-social a:hover { color: #a8e6cf; }
+        .year-banner {
+            background: linear-gradient(90deg, #e4c58020, #e4c58040, #e4c58020);
+            padding: 1rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 50px;
+            border: 1px solid #e4c58040;
+        }
+        .year-banner span {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e4c580;
+            text-shadow: 0 0 10px #e4c580;
+        }
+        .year-banner i {
+            color: #e4c580;
+            margin: 0 15px;
+            font-size: 1.5rem;
+        }
+        .footer {
+            background: #050708;
+            padding: 4rem 5% 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e4c580, #ffd700, #e4c580);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e4c580;
+            margin-bottom: 1rem;
+        }
+        .footer-description {
+            color: #666;
+            line-height: 1.8;
+        }
+        .footer-description strong {
+            color: #e4c580;
+            font-size: 1.1rem;
+        }
+        .establish-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #e4c58020, #ffd70020);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            border: 1px solid #e4c580;
+            color: #e4c580;
+        }
+        .survey-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(0, 184, 148, 0.5);
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 184, 148, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(0, 184, 148, 0.8); }
+        }
+        .survey-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 35px rgba(0, 184, 148, 0.9);
+        }
+        .footer-links h4 {
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 0.8rem; }
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .footer-links a:hover {
+            color: #e4c580;
+            padding-left: 5px;
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #444;
+            font-size: 0.9rem;
+        }
+        .copyright i { color: #e4c580; }
+        .designer-name {
+            color: #e4c580;
+            font-weight: normal;
+            font-size: 1.1rem;
+        }
+        .gatekeeper-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: 0.3s;
+        }
+        .gate-card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px 40px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .gate-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .gate-question {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #222;
+        }
+        .gate-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .gate-btn {
+            background: #fe2c55;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 120px;
+        }
+        .gate-btn:hover {
+            background: #d91a46;
+            transform: scale(1.02);
+        }
+        .gate-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .alert-content {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .alert-img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 1rem; }
+            .nav-links { gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+            .hero h1 { font-size: 3rem; }
+            .hero-content { padding: 2rem 1rem; }
+            .hero-stats { flex-direction: column; gap: 1.5rem; }
+            .section-title { font-size: 2rem; }
+            .memory-nav { flex-direction: column; align-items: center; gap: 1rem; }
+            .memory-btn { width: 100%; max-width: 300px; }
+            .teachers-grid, .leaders-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .leaders-grid .member-card:nth-child(2) { order: -1; }
+            .members-grid, .special-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+            .stats-container { flex-direction: column; gap: 2rem; padding: 2rem; }
+            .sound-control-wrapper { bottom: 20px; right: 20px; }
+            .sound-tooltip { font-size: 0.7rem; padding: 6px 12px; }
+            .member-card { height: 300px; }
+            .year-banner span { font-size: 1.5rem; }
+            .year-banner i { font-size: 1.2rem; margin: 0 8px; }
+            .logo-img { width: 40px; height: 40px; }
+            .logo-text { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- GATEKEEPER -->
+<div id="gatekeeper" class="gatekeeper-overlay">
+    <div class="gate-card">
+        <img src="anhqs.jpg" class="gate-img" alt="Câu hỏi" 
+             onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/190/190411.png';">
+        <p class="gate-question">Lớp trưởng thích con gì nhất?</p>
+        <div class="gate-options">
+            <button class="gate-btn" data-answer="A">A. Gấu trúc</button>
+            <button class="gate-btn" data-answer="B">B. Cáo</button>
+            <button class="gate-btn" data-answer="C">C. Rắn độc</button>
+            <button class="gate-btn" data-answer="D">D. Capybara</button>
+        </div>
+    </div>
+</div>
+
+<!-- ALERT KHI SAI -->
+<div id="gateAlert" class="gate-alert">
+    <div class="alert-content">
+        <img id="alertGif" src="https://i.gifer.com/ZZ5H.gif" alt="Sai rồi" class="alert-img">
+        <p style="font-size: 24px; font-weight: bold; color: #d91a46; margin-top: 15px; text-align: center;">⚠️ SAI RỒI! Thử lại nhé.</p>
+        <button onclick="closeAlert()" style="margin-top: 20px; padding: 10px 30px; background: #fe2c55; color: white; border: none; border-radius: 30px; font-size: 18px; font-weight: bold; cursor: pointer; display: block; margin-left: auto; margin-right: auto;">Đóng</button>
+    </div>
+</div>
+
+<!-- NỘI DUNG CHÍNH -->
+<div id="mainContent" style="display: none;">
+    <div class="sound-control-wrapper">
+        <div class="sound-tooltip" id="soundTooltip">
+            <i class="fas fa-volume-up"></i> nhấn vào đây để mở tiếng
+        </div>
+        <div class="sound-control" id="soundControl">
+            <i class="fas fa-volume-up" id="soundIcon"></i>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-img" id="logoContainer">
+                <img src="logo12a4.jpg" alt="12A4 Logo" id="logoImage" 
+                     onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+                     onload="this.style.display='block'; document.getElementById('logoFallback').style.display='none';">
+                <div class="fallback" id="logoFallback" style="display: none;">12A4</div>
+            </div>
+            <div class="logo-text">12A4</div>
+        </div>
+        <div class="nav-links">
+            <a href="#home">TRANG CHỦ</a>
+            <a href="#about">GIỚI THIỆU</a>
+            <a href="#memories">KỶ NIỆM</a>
+            <a href="#members">THÀNH VIÊN</a>
+            <a href="#contact">LIÊN HỆ</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <video autoplay loop playsinline class="hero-video" id="heroVideo">
+            <source src="background.mp4" type="video/mp4">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-students-studying-and-writing-911-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <div class="hero-subtitle">CHÀO MỪNG ĐẾN VỚI</div>
+            <h1>LỚP <span>12A4</span></h1>
+            <p>Nơi hội tụ 43 cá tính mạnh mẽ, nơi tình bạn thăng hoa và những kỷ niệm đẹp nhất được viết nên</p>
+            <div class="hero-stats">
+                <div class="hero-stat-item"><div class="hero-stat-number">43</div><div class="hero-stat-label">THÀNH VIÊN</div></div>
+                <div class="hero-stat-item"><div class="hero-stat-number">150+</div><div class="hero-stat-label">KHOẢNH KHẮC</div></div>
+                <div class="hero-stat-item"><div class="hero-stat-number">100%</div><div class="hero-stat-label">ĐOÀN KẾT</div></div>
+            </div>
+            <a href="#memories" class="btn">KHÁM PHÁ KỶ NIỆM</a>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="section-header">
+            <div class="section-subtitle">CÂU CHUYỆN CỦA CHÚNG TÔI</div>
+            <h2 class="section-title">Về 12A4</h2>
+            <p class="section-desc">Không chỉ là một lớp học, chúng tôi là một gia đình</p>
+        </div>
+        <div class="year-banner">
+            <i class="fas fa-calendar-alt"></i>
+            <span>2023 - 2026</span>
+            <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="stats-container">
+            <div class="stat-box"><div class="stat-number">2023</div><div class="stat-label">Vào lớp 10</div></div>
+            <div class="stat-box"><div class="stat-number">43</div><div class="stat-label">Thành viên</div></div>
+            <div class="stat-box"><div class="stat-number">3</div><div class="stat-label">Ban cán sự</div></div>
+            <div class="stat-box"><div class="stat-number">2026</div><div class="stat-label">Tốt nghiệp</div></div>
+        </div>
+    </section>
+
+    <section class="section" id="memories">
+        <div class="section-header">
+            <div class="section-subtitle">HÀNH TRÌNH 3 NĂM</div>
+            <h2 class="section-title">Khoảnh khắc đáng nhớ</h2>
+            <p class="section-desc">Chọn một chặng đường để xem những kỷ niệm</p>
+        </div>
+        <div class="memory-nav">
+            <a href="lop10.html" class="memory-btn lop10"><i class="fas fa-seedling"></i> LỚP 10</a>
+            <a href="lop11.html" class="memory-btn lop11"><i class="fas fa-tree"></i> LỚP 11</a>
+            <a href="lop12.html" class="memory-btn lop12"><i class="fas fa-crown"></i> LỚP 12</a>
+        </div>
+        <div class="memory-tooltip">
+            <i class="fas fa-hand-pointer"></i> 📸 Bấm vào đây để xem khoảnh khắc!
+        </div>
+    </section>
+
+    <section class="members-section" id="members">
+        <div class="section-header">
+            <div class="section-subtitle">GIA ĐÌNH 12A4</div>
+            <h2 class="section-title">43 thành viên</h2>
+            <p class="section-desc">Những con người tạo nên tập thể đặc biệt này</p>
+        </div>
+        <h3 class="category-title">GIÁO VIÊN CHỦ NHIỆM</h3>
+        <div class="teachers-grid" id="teachersGrid"></div>
+        <h3 class="category-title">BAN CÁN SỰ LỚP</h3>
+        <div class="leaders-grid" id="leadersGrid"></div>
+        <h3 class="category-title">CÁC THÀNH VIÊN</h3>
+        <div class="members-grid" id="membersGrid"></div>
+        
+        <!-- Thành viên đặc biệt - Du học sinh -->
+        <h3 class="category-title special-title">✨ THÀNH VIÊN ĐẶC BIỆT ✨</h3>
+        <div class="special-grid" id="specialGrid"></div>
+        <p style="text-align: center; color: #e4c580; margin-top: 10px; font-style: italic;">
+            <i class="fas fa-plane"></i> Những du học sinh - Vẫn luôn là một phần của 12A4 dù ở bất cứ đâu!
+        </p>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">12A4</div>
+                <p class="footer-description">
+                    Lớp học đặc biệt - Nơi tình bạn thăng hoa<br/>
+                    Trường THPT Thống Nhất<br/>
+                    Designer: Lưu Lâm Phúc<br/>
+                    <span class="establish-badge"><i class="fas fa-calendar-alt"></i> Thành lập: 13.03.2026</span>
+                </p>
+                <a href="https://forms.gle/C9fSMaKfry9dsmNx9" target="_blank" class="survey-btn">
+                    <i class="fas fa-poll"></i> 💬 GÓP Ý & KHẢO SÁT
+                </a>
+                <p style="font-size: 0.7rem; color: #666; margin-top: 10px;">Đóng góp ý kiến để lớp thêm vững mạnh!</p>
+            </div>
+            <div class="footer-links">
+                <h4>LIÊN KẾT</h4>
+                <ul>
+                    <li><a href="#home">Trang chủ</a></li>
+                    <li><a href="#about">Giới thiệu</a></li>
+                    <li><a href="#memories">Kỷ niệm</a></li>
+                    <li><a href="#members">Thành viên</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>KẾT NỐI</h4>
+                <ul>
+                    <li><a href="https://www.facebook.com/profile.php?id=61568680924929" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="https://www.tiktok.com/@a4xjnchaoo" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>LIÊN HỆ</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Trường THPT Thống Nhất</li>
+                    <li><i class="fas fa-phone"></i> 0969 324 797</li>
+                    <li><i class="fas fa-envelope"></i> a4thpttn@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 LỚP 12A4 - Designed with <i class="fas fa-heart"></i> by <span class="designer-name">Lưu Lâm Phúc</span></p>
+        </div>
+    </footer>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const CORRECT_ANSWER = "D";
+    const gatekeeper = document.getElementById('gatekeeper');
+    const mainContent = document.getElementById('mainContent');
+    const alertBox = document.getElementById('gateAlert');
+    const alertGif = document.getElementById('alertGif');
+
+    document.querySelectorAll('.gate-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (this.dataset.answer === CORRECT_ANSWER) {
+                gatekeeper.style.display = 'none';
+                if (mainContent) mainContent.style.display = 'block';
+                const video = document.getElementById('heroVideo');
+                if (video) video.play().catch(e => console.log("Video play error:", e));
+            } else {
+                if (alertGif) {
+                    alertGif.onerror = function() {
+                        this.onerror = null;
+                        this.src = 'https://media.giphy.com/media/3o7abB06u9bNzA8LC8/giphy.gif';
+                    };
+                }
+                alertBox.style.display = 'flex';
+                setTimeout(() => alertBox.style.display = 'none', 2000);
+            }
+        });
+    });
+
+    window.closeAlert = () => { alertBox.style.display = 'none'; };
+
+    // Avatar mặc định
+    const DEFAULT_AVATAR = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+    
+    // Danh sách thành viên (43 người)
+    const membersList = [
+        { name: 'Cô Nguyễn Thúy An', role: 'GVCN LỚP 10', avatar: 'gv10', fb: 'https://www.facebook.com/an.nguyenthuy.503' },
+        { name: 'Cô Đỗ Thị Sự', role: 'GVCN LỚP 11', avatar: 'gv11', fb: 'https://www.facebook.com/profile.php?id=100055379874783' },
+        { name: 'Cô Trần Thị Kim Anh', role: 'GVCN LỚP 12', avatar: 'gv12', fb: '' },
+        { name: 'Đặng Quỳnh Như Anh', role: 'THỦ QUỸ', isLeader: true, avatar: 'avtthuquy', fb: 'https://www.facebook.com/nhaz.ank' },
+        { name: 'Bùi Tuấn Kiệt', role: 'LỚP TRƯỞNG', isLeader: true, avatar: 'avtloptruong', fb: 'https://www.facebook.com/kiet.bui.225319' },
+        { name: 'Mai Bình Minh', role: 'LỚP PHÓ', isLeader: true, avatar: 'avtloppho', fb: 'https://www.facebook.com/mai.minh.98208' },
+        { name: 'Nguyễn Hoàng Nhật Bảo', role: 'THÀNH VIÊN', avatar: 'avt1', fb: 'https://www.facebook.com/nbao2301' },
+        { name: 'Phạm Thị Thùy Dung', role: 'THÀNH VIÊN', avatar: 'avt2', fb: 'https://www.facebook.com/Yun.dang.yeu2008' },
+        { name: 'Hoàng Trương Đức Duy', role: 'THÀNH VIÊN', avatar: 'avt3', fb: 'https://www.facebook.com/ducduy.6608' },
+        { name: 'Mai Hà Khánh Đan', role: 'THÀNH VIÊN', avatar: 'avt4', fb: 'https://www.facebook.com/anmai.782915' },
+        { name: 'Mai Minh Đức', role: 'THÀNH VIÊN', avatar: 'avt5', fb: 'https://www.facebook.com/ducdeyyyy' },
+        { name: 'Phạm Vũ Phước Giàu', role: 'THÀNH VIÊN', avatar: 'avt6', fb: 'https://www.facebook.com/pham.giau.125753' },
+        { name: 'Nguyễn Hoàng Ngọc Hà', role: 'THÀNH VIÊN', avatar: 'avt7', fb: 'https://www.facebook.com/ngocha6108' },
+        { name: 'Vũ Nguyễn Kim Hạnh', role: 'THÀNH VIÊN', avatar: 'avt8', fb: 'https://www.facebook.com/hanhahahaa' },
+        { name: 'Đỗ Ngọc Bảo Hân', role: 'THÀNH VIÊN', avatar: 'avt9', fb: 'https://www.facebook.com/baohan.16108' },
+        { name: 'Nguyễn Nhật Minh Hiếu', role: 'THÀNH VIÊN', avatar: 'avt10', fb: 'https://www.facebook.com/hieu.nguyen.744759' },
+        { name: 'Nguyễn Trần Gia Huy', role: 'THÀNH VIÊN', avatar: 'avt11', fb: 'https://www.facebook.com/huy.nguyen.12253' },
+        { name: 'Nguyễn Phạm Ngọc Lệ', role: 'THÀNH VIÊN', avatar: 'avt12', fb: 'https://www.facebook.com/nguyen.ngoc.le.662551' },
+        { name: 'Trần Hoàng Long', role: 'THÀNH VIÊN', avatar: 'avt13', fb: 'https://www.facebook.com/t.hflong14' },
+        { name: 'Đỗ Xuân Lộc', role: 'THÀNH VIÊN', avatar: 'avt14', fb: 'https://www.facebook.com/doloc1502' },
+        { name: 'Mai Nhật Minh', role: 'THÀNH VIÊN', avatar: 'avt15', fb: 'https://www.facebook.com/mai.minh.559445' },
+        { name: 'Vũ Hải Nguyên', role: 'THÀNH VIÊN', avatar: 'avt16', fb: 'https://www.facebook.com/nadia.vu.178' },
+        { name: 'Nguyễn Minh Nhật', role: 'THÀNH VIÊN', avatar: 'avt17', fb: 'https://www.facebook.com/nguyen.minh.nhat.176651' },
+        { name: 'Trần Bùi Khánh Nhi', role: 'THÀNH VIÊN', avatar: 'avt18', fb: 'https://www.facebook.com/knhixinhgaii' },
+        { name: 'Lưu Lâm Phúc', role: 'THÀNH VIÊN', avatar: 'avt19', fb: 'https://www.facebook.com/nhabachoc66' },
+        { name: 'Ngô Quỳnh Phương', role: 'THÀNH VIÊN', avatar: 'avt20', fb: 'https://www.facebook.com/quinh.phuowg' },
+        { name: 'Kim Giang Sơn', role: 'THÀNH VIÊN', avatar: 'avt21', fb: 'https://www.facebook.com/Jaysonn.1808' },
+        { name: 'Đỗ Thành Tâm', role: 'THÀNH VIÊN', avatar: 'avt22', fb: 'https://www.facebook.com/otam.445706' },
+        { name: 'Nguyễn Hữu Thắng', role: 'THÀNH VIÊN', avatar: 'avt23', fb: 'https://www.facebook.com/nguyenhuuthang111111' },
+        { name: 'Nguyễn Trần Đức Thiện', role: 'THÀNH VIÊN', avatar: 'avt24', fb: 'https://www.facebook.com/nguyen.uc.thien.950613' },
+        { name: 'Phạm Anh Thư', role: 'THÀNH VIÊN', avatar: 'avt25', fb: 'https://www.facebook.com/phamm.athuu' },
+        { name: 'Nguyễn Ngọc Thương', role: 'THÀNH VIÊN', avatar: 'avt26', fb: 'https://www.facebook.com/itachinguyen.09' },
+        { name: 'Trần Đức Tiến', role: 'THÀNH VIÊN', avatar: 'avt27', fb: 'https://www.facebook.com/tran.uc.tien.975756' },
+        { name: 'Trần Ngọc Quỳnh Trâm', role: 'THÀNH VIÊN', avatar: 'avt28', fb: 'https://www.facebook.com/ngocquynhtram08' },
+        { name: 'Hoàng Ngọc Huyền Trân', role: 'THÀNH VIÊN', avatar: 'avt29', fb: 'https://www.facebook.com/huyen.tran.83987' },
+        { name: 'Vũ Thụy Thanh Trúc', role: 'THÀNH VIÊN', avatar: 'avt30', fb: 'https://www.facebook.com/erica.vttt' },
+        { name: 'Nguyễn Hoàng Quang Trung', role: 'THÀNH VIÊN', avatar: 'avt31', fb: 'https://www.facebook.com/quang.trung.362838' },
+        { name: 'Phạm Thụy Minh Tú', role: 'THÀNH VIÊN', avatar: 'avt32', fb: 'https://www.facebook.com/mnhtp.iu' },
+        { name: 'Trần Đức Tú', role: 'THÀNH VIÊN', avatar: 'avt33', fb: 'https://www.facebook.com/tran.uc.tu.766270' },
+        { name: 'Trương Anh Vũ', role: 'THÀNH VIÊN', avatar: 'avt34', fb: 'https://www.facebook.com/profile.php?id=61578997314660' },
+        { name: 'Vũ Hoàng Phương Vy', role: 'THÀNH VIÊN', avatar: 'avt35', fb: 'https://www.facebook.com/phwvivu' }
+    ];
+
+    // 5 du học sinh cuối (từ Nguyễn Thành Phát đến Nguyễn Triệu Ánh Dương) - TẤT CẢ ĐỀU DU HỌC MỸ
+    const specialMembers = [
+        { name: 'Nguyễn Thành Phát', role: 'DU HỌC SINH', avatar: 'avt36', fb: 'https://www.facebook.com/thanhphatt190908', specialNote: '🇺🇸 Đang du học tại Mỹ' },
+        { name: 'Nguyễn Ngọc Phương Quỳnh', role: 'DU HỌC SINH', avatar: 'avt37', fb: 'https://www.facebook.com/phuong.quynh.965037', specialNote: '🇺🇸 Đang du học tại Mỹ' },
+        { name: 'Ngô Kiều My', role: 'DU HỌC SINH', avatar: 'avt38', fb: 'https://www.facebook.com/kieu.my.992300', specialNote: '🇺🇸 Đang du học tại Mỹ' },
+        { name: 'Nguyễn Phương Thảo', role: 'DU HỌC SINH', avatar: 'avt39', fb: 'https://www.facebook.com/phuong.thao.546663', specialNote: '🇺🇸 Đang du học tại Mỹ' },
+        { name: 'Nguyễn Triệu Ánh Dương', role: 'DU HỌC SINH', avatar: 'avt40', fb: 'https://www.facebook.com/duong.nguyen.983775', specialNote: '🇺🇸 Đang du học tại Mỹ' }
+    ];
+
+    const video = document.getElementById('heroVideo');
+    const soundControl = document.getElementById('soundControl');
+    const soundIcon = document.getElementById('soundIcon');
+    const soundTooltip = document.getElementById('soundTooltip');
+
+    if (video && soundControl) {
+        video.muted = false;
+        soundIcon.className = 'fas fa-volume-up';
+        soundControl.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                soundIcon.className = 'fas fa-volume-up';
+                soundTooltip.innerHTML = '<i class="fas fa-volume-up"></i> nhấn để tắt tiếng';
+            } else {
+                video.muted = true;
+                soundIcon.className = 'fas fa-volume-mute';
+                soundTooltip.innerHTML = '<i class="fas fa-volume-mute"></i> nhấn để mở tiếng';
+            }
+        });
+    }
+
+    function createCard(member, type, isSpecial = false) {
+        let cardClass = 'member-card';
+        if (type === 'teacher') cardClass += ' teacher';
+        if (type === 'leader') cardClass += ' leader';
+        if (isSpecial) cardClass += ' special';
+        
+        let avatarSize = (type === 'leader' && window.innerWidth > 768) ? 'style="width:140px;height:140px"' : '';
+        
+        return `
+        <div class="${cardClass}">
+            <div class="card-inner">
+                <div class="member-avatar" ${avatarSize}>
+                    <img src="${member.avatar}.jpg" alt="${member.name}" 
+                         onerror="this.onerror=null; this.src='${DEFAULT_AVATAR}';">
+                </div>
+                <div class="member-name">${member.name}</div>
+                <div class="member-role">${member.role}</div>
+                ${member.specialNote ? `<div class="special-status"><i class="fas fa-plane"></i> ${member.specialNote}</div>` : ''}
+                <div class="member-social">
+                    ${member.fb ? `<a href="${member.fb}" target="_blank" onclick="event.stopPropagation();"><i class="fab fa-facebook"></i></a>` : ''}
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    function createTeachers() {
+        const teachersGrid = document.getElementById('teachersGrid');
+        if (!teachersGrid) return;
+        teachersGrid.innerHTML = '';
+        membersList.slice(0, 3).forEach((teacher) => {
+            teachersGrid.innerHTML += createCard(teacher, 'teacher');
+        });
+    }
+
+    function createLeaders() {
+        const leadersGrid = document.getElementById('leadersGrid');
+        if (!leadersGrid) return;
+        leadersGrid.innerHTML = '';
+        membersList.slice(3, 6).forEach((member) => {
+            leadersGrid.innerHTML += createCard(member, 'leader');
+        });
+    }
+
+    function createMembers() {
+        const membersGrid = document.getElementById('membersGrid');
+        if (!membersGrid) return;
+        membersGrid.innerHTML = '';
+        // 43 thành viên = 3 GV + 3 BCS + 35 thành viên còn lại (vì 5 du học sinh đã tách riêng)
+        membersList.slice(6, 41).forEach((member) => {
+            membersGrid.innerHTML += createCard(member, 'member');
+        });
+    }
+
+    function createSpecialMembers() {
+        const specialGrid = document.getElementById('specialGrid');
+        if (!specialGrid) return;
+        specialGrid.innerHTML = '';
+        specialMembers.forEach((member) => {
+            specialGrid.innerHTML += createCard(member, 'special', true);
+        });
+    }
+
+    createTeachers();
+    createLeaders();
+    createMembers();
+    createSpecialMembers();
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(anchor.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+});
+</script>
+</body>
+</html>
